@@ -1,0 +1,66 @@
+import SwiftUI
+
+/// Eén witte hoofdknop per kaart.
+struct NookPrimaryButton: View {
+    let title: String
+    let action: () -> Void
+    @State private var hovering = false
+
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .font(NookTheme.font(14, .semibold))
+                .foregroundStyle(NookTheme.ink)
+                .padding(.horizontal, 18)
+                .frame(height: 38)
+                .background(Capsule().fill(hovering ? Color.white : NookTheme.paper))
+        }
+        .buttonStyle(.plain)
+        .onHover { hovering = $0 }
+    }
+}
+
+/// De rustige tekstknop naast de hoofdknop.
+struct NookGhostButton: View {
+    let title: String
+    let action: () -> Void
+    @State private var hovering = false
+
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .font(NookTheme.font(14, .semibold))
+                .foregroundStyle(hovering ? NookTheme.paper : NookTheme.textSecondary)
+                .padding(.horizontal, 12)
+                .frame(height: 38)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .onHover { hovering = $0 }
+    }
+}
+
+/// Ronde icoonknop (microfoon, sluiten, afspelen…).
+struct NookIconButton: View {
+    let systemName: String
+    let label: String
+    var filled: Bool = false
+    var size: CGFloat = 34
+    let action: () -> Void
+    @State private var hovering = false
+
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: systemName)
+                .font(.system(size: size * 0.42, weight: .semibold))
+                .foregroundStyle(filled ? NookTheme.ink : (hovering ? NookTheme.paper : NookTheme.textSecondary))
+                .frame(width: size, height: size)
+                .background(
+                    Circle().fill(filled ? NookTheme.paper : (hovering ? NookTheme.smoke : Color.clear))
+                )
+        }
+        .buttonStyle(.plain)
+        .onHover { hovering = $0 }
+        .accessibilityLabel(label)
+    }
+}

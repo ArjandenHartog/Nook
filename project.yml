@@ -1,0 +1,59 @@
+name: Nook
+options:
+  bundleIdPrefix: nl.imdigital
+  deploymentTarget:
+    macOS: "15.0"
+  createIntermediateGroups: true
+  developmentLanguage: nl
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+targets:
+  Nook:
+    type: application
+    platform: macOS
+    sources:
+      - path: App
+      - path: NotchUI
+      - path: Demo
+      - path: Core
+      - path: Services
+      - path: Brain
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleName: Nook
+        CFBundleDisplayName: Nook
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        LSUIElement: true
+        LSMinimumSystemVersion: "15.0"
+        NSCalendarsFullAccessUsageDescription: Nook leest je agenda om afspraken voor te stellen en te maken.
+        NSRemindersFullAccessUsageDescription: Nook maakt herinneringen voor je aan.
+        NSMicrophoneUsageDescription: Nook luistert alleen mee als jij erom vraagt, om je stem om te zetten in acties.
+        NSSpeechRecognitionUsageDescription: Nook zet wat je zegt om in tekst, bij voorkeur op je eigen Mac.
+        NSAppleEventsUsageDescription: Nook bedient Spotify en Muziek en een paar systeeminstellingen voor je.
+    entitlements:
+      path: App/Nook.entitlements
+      properties:
+        com.apple.security.app-sandbox: false
+        com.apple.security.device.audio-input: true
+        com.apple.security.automation.apple-events: true
+        com.apple.security.personal-information.calendars: true
+    settings:
+      base:
+        PRODUCT_NAME: Nook
+        PRODUCT_BUNDLE_IDENTIFIER: nl.imdigital.nook
+        ENABLE_HARDENED_RUNTIME: YES
+        CODE_SIGN_STYLE: Manual
+        CODE_SIGN_IDENTITY: "-"
+        ENABLE_PREVIEWS: YES
+schemes:
+  Nook:
+    build:
+      targets:
+        Nook: all
+    run:
+      config: Debug

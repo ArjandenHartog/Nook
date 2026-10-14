@@ -1,0 +1,92 @@
+import SwiftUI
+
+/// Nook: een licht met twee ogen. Ademt, knippert en past zijn ogen aan op de stemming.
+struct NookOrb: View {
+    var mood: NookMood
+    var size: CGFloat = 46
+
+    var body: some View {
+        TimelineView(.animation(minimumInterval: 1.0 / 30.0)) { context in
+            let t = context.date.timeIntervalSinceReferenceDate
+            orb(at: t)
+        }
+        .frame(width: size, height: size)
+        .accessibilityHidden(true)
+    }
+
+    private func orb(at t: Double) -> some View {
+        let breath = 1 + 0.05 * sin(t * 2 * Double.pi / 3.4)
+        let beat = sin(t * 2 * Double.pi / 0.62)
+        let dancing = mood == .dance
+        return ZStack {
+            Circle()
+                .fill(mood.color)
+                .shadow(color: mood.color.opacity(0.55), radius: size * 0.42)
+            HStack(spacing: size * 0.18) {
+                eye(index: 0, t: t)
+                eye(index: 1, t: t)
+            }
+        }
+        .frame(width: size, height: size)
+        .scaleEffect(CGFloat(breath))
+        .rotationEffect(.degrees(dancing ? beat * 8 : 0))
+        .offset(y: dancing ? CGFloat(-abs(beat)) * size * 0.12 : 0)
+        .animation(.easeInOut(duration: 0.3), value: mood)
+    }
+
+    // MARK: Ogen
+
+    private var eyeSize: CGSize {
+        switch mood {
+        case .rest, .seen, .dance, .remind:
+            return CGSize(width: size * 0.11, height: size * 0.30)
+        case .listen:
+            return CGSize(width: size * 0.11, height: size * 0.40)
+        case .waiting, .worry:
+            return CGSize(width: size * 0.13, height: size * 0.34)
+        case .think:
+            return CGSize(width: size * 0.12, height: size * 0.12)
+        case .done:
+            return CGSize(width: size * 0.20, height: size * 0.09)
+        }
+    }
+
+    private var eyeShape: AnyShape {
+        switch mood {
+        case .think:
+            return AnyShape(Circle())
+        case .done:
+            let r = eyeSize.width / 2
+            return AnyShape(UnevenRoundedRectangle(
+                topLeadingRadius: r,
+                bottomLeadingRadius: 0,
+                bottomTrailingRadius: 0,
+                topTrailingRadius: r
+            ))
+        default:
+            return AnyShape(Capsule())
+        }
+    }
+
+    private func eye(index: Int, t: Double) -> some View {
+        let s = eyeSize
+        let bounce: CGFloat = mood == .think
+            ? CGFloat(-abs(sin(t * 2 * Double.pi + Double(index) * 0.8))) * size * 0.10
+            : 0
+        return eyeShape
+            .fill(NookTheme.eyeInk)
+            .frame(width: s.width, height: s.height)
+            .scaleEffect(x: 1, y: blinkScale(t))
+            .offset(y: bounce)
+            .animation(.spring(response: 0.35, dampingFraction: 0.7), value: mood)
+    }
+
+    /// Knippert elke 5 seconden, behalve als hij tevreden is.
+    private func blinkScale(_ t: Double) -> CGFloat {
+        if mood == .done { return 1 }
+        let phase = t.truncatingRemainder(dividingBy: 5.0)
+        guard phase > 4.7 else { return 1 }
+        let p = (phase - 4.7) / 0.3
+        return CGFloat(1 - 0.9 * sin(p * Double.pi))
+    }
+}
