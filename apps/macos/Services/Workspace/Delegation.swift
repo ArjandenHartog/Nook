@@ -1,6 +1,6 @@
 import Foundation
 
-// Agents that start agents (T3Code's `delegate_task`): a session hands a task to a child session through the workspace
+// Agents that start agents: a session hands a task to a child session through the workspace
 // bridge, and gets the result back. The rules here keep that safe: a child never has more rights than its parent, the
 // child sees only the task (not the parent's conversation), and the chain is bounded.
 // Foundation only, so tests can use it independently.
@@ -86,7 +86,7 @@ enum DelegationPolicy {
     }
 
     /// The mode and rights of the child. Omitted values are inherited; asking for more than the parent has is refused; an
-    /// inherited right the target agent does not offer steps down to the broadest one it does (T3Code does the same).
+    /// inherited right the target agent does not offer steps down to the broadest one it does.
     /// A read-only role makes the child plan when the caller did not choose.
     static func resolve(parentMode: ExecutionMode, parentPermission: PermissionPolicy,
                         mode requestedMode: ExecutionMode?, permission requestedPermission: PermissionPolicy?,

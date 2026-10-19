@@ -1,6 +1,6 @@
 import Foundation
 
-// Session state beyond start/stop: going on after a restart and snoozing (T3Code's restart continuation and snooze).
+// Session state beyond start/stop: going on after a restart and snoozing.
 
 extension WorkspaceManager {
     /// Sessions a restart of Nook cut off get "Continue where you left off." once. Called a moment after launch, when the
@@ -55,7 +55,7 @@ extension WorkspaceManager {
         return AgentAttention.resolve(input)
     }
 
-    /// The reasoning effort for the next turns. An effort the agent does not offer is skipped (T3Code), not an error.
+    /// The reasoning effort for the next turns. An effort the agent does not offer is skipped, not an error.
     func setEffort(_ id: UUID, _ effort: String?) {
         guard let run = run(id), !run.status.isActive else { return }
         let offered = EffortLevels.levels(for: run.provider, model: run.model)

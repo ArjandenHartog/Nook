@@ -657,7 +657,7 @@ final class WorkspaceBridge: ObservableObject {
                                            role: role, wake: !wait)
         let childID: UUID
         do {
-            // The task works in the same folder as its parent, as T3Code's child threads do.
+            // The task works in the same folder as its parent.
             childID = try await workspace.start(config, allowSharedFolder: true)
         } catch {
             audit(.delegateTask, caller, task, "mislukt: \(error.localizedDescription)")

@@ -1,6 +1,6 @@
 import XCTest
 
-/// The pull request list in one GraphQL request per account, as T3Code fetches it.
+/// The pull request list in one GraphQL request per account.
 final class PullRequestGraphQLTests: XCTestCase {
     func testQueryAsksForEverythingAtOnce() throws {
         let body = try XCTUnwrap(JSONSerialization.jsonObject(with: PullRequestGraphQL.body()) as? [String: Any])

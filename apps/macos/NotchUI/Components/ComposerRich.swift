@@ -1,7 +1,7 @@
 import SwiftUI
 import AppKit
 
-// What makes the one composer behave like T3Code's: a list under the text for `/`, `@` and `#`, references that sit in the
+// Rich composer behavior: a list under the text for `/`, `@` and `#`, references that sit in the
 // message as links, history on the arrow keys, big pastes kept out of the box. The box itself is `SessionComposer`; the
 // chat and the agents both use it and differ only in what they put in `ComposerConfig` and in the choices row.
 
@@ -10,7 +10,7 @@ struct ComposerSuggestion: Identifiable, Equatable {
     enum Payload: Equatable {
         case command(ComposerCommand)
         case ref(ContextRef)
-        /// A set-aside draft (T3Code's prompt stash), by position.
+        /// A set-aside draft, by position.
         case stash(Int)
     }
 
@@ -155,7 +155,7 @@ final class ComposerModel: ObservableObject {
 
     // MARK: Stash
 
-    /// Cmd+S (T3Code): set the draft aside, bring one back, or choose from several. Returns the new text for the box.
+    /// Cmd+S: set the draft aside, bring one back, or choose from several. Returns the new text for the box.
     func stashKey(composerText: String) -> String? {
         switch StashAction.decide(composerText: composerText, stashCount: stash.entries.count) {
         case .stash:
@@ -343,8 +343,8 @@ struct ComposerMic: View {
     }
 }
 
-/// How full the agent's context window is: a small ring that starts at the top and turns coral above 90 % (T3Code's
-/// context meter). Hover says how much; a button asks the agent to summarize when it can.
+/// How full the agent's context window is: a small ring that starts at the top and turns coral above 90 %.
+/// Hover says how much; a button asks the agent to summarize when it can.
 struct ComposerContextRing: View {
     let used: Int
     let window: Int

@@ -1,6 +1,6 @@
 import Foundation
 
-/// Gemini CLI, OpenCode, Cursor and Grok over ACP, the way T3Code runs them: one agent process per session, kept alive
+/// Gemini CLI, OpenCode, Cursor and Grok over ACP: one agent process per session, kept alive
 /// between turns. A turn is `session/prompt`; its reply ends the turn. Messages and thoughts stream in as
 /// `session/update`, tool calls show live, and the agent's permission requests are answered here (or right away when the
 /// session's rights allow it). A continued conversation is `session/load` when the agent supports it.
@@ -38,7 +38,7 @@ extension WorkspaceManager {
                                        resumeSessionID: run.providerSessionID, accountEnvironment: accountEnvironment(run.profileID), runID: id)
         var spec = AgentCommand.acpSpec(input)
         if run.provider == .antigravity {
-            // Its own profile folder, harness and sign-in helper; your other Google settings stay out (T3Code's way).
+            // Its own profile folder, harness and sign-in helper; your other Google settings stay out.
             guard let environment = prepareAntigravity(profileID: run.profileID, executable: executable) else {
                 if prompt != nil { failAcpTurn(id, tr("ws.antigravity.notInstalled")) }
                 return
@@ -146,7 +146,7 @@ extension WorkspaceManager {
         }
         learnModels(run.provider, AgentModelCatalog.acp(response))
         if !run.model.isEmpty {
-            // A model config option is set as one (T3Code's way for newer agents); otherwise `session/set_model`.
+            // A model config option is set as one; otherwise `session/set_model`.
             if let option = AgentModelCatalog.acpModelOptionID(response) {
                 client.request("session/set_config_option", ["sessionId": session, "configId": option, "value": run.model]) { _ in }
             } else {

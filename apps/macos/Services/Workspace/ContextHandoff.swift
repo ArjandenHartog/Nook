@@ -1,6 +1,6 @@
 import Foundation
 
-// Forking a session and switching it to another agent (T3Code's context transfer and provider handoff). The new agent
+// Forking a session and switching it to another agent. The new agent
 // cannot read the old agent's conversation, so what happened is handed over as a short, readable summary at the start of
 // its first turn. It is built from the timeline without a model, so it is deterministic, bounded, and visible to you in
 // the timeline: nothing is slipped into a prompt unseen. A handoff is a summary, not native context parity.
@@ -31,7 +31,7 @@ enum ContextTransfer {
 }
 
 enum ContextHandoff {
-    /// The most the summary may cost the new agent, in tokens (T3Code caps its handoff the same way).
+    /// The most the summary may cost the new agent, in tokens.
     static let tokenBudget = 16_000
     /// What one item may say: a message, or a tool call / file change.
     static let messageLimit = 600
@@ -117,13 +117,13 @@ struct RunLineage: Codable, Equatable, Sendable {
     var atEvent: Int
 }
 
-/// One agent with one account is one instance: its conversation is its own. T3Code routes work by instance for the same
-/// reason: two accounts of one agent never share a session.
+/// One agent with one account is one instance: its conversation is its own.
+/// Two accounts of one agent never share a session.
 enum ProviderInstance {
     static func key(_ provider: RunProvider, _ profileID: String) -> String { provider.rawValue + "|" + profileID }
 }
 
-/// What changing the agent, account or model of a running session means (T3Code's `decideProviderSessionTransition`).
+/// What changing the agent, account or model of a running session means.
 enum SelectionTransition: Equatable, Sendable {
     /// Nothing changes.
     case reuse

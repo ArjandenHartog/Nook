@@ -13,7 +13,7 @@ struct EventSettlement: Equatable, Sendable {
 }
 
 /// Every path that ends a turn (done, Stop, failure, process exit) must leave no event spinning or awaiting an
-/// answer (T3Code docs/internals/adding-a-provider.md: every eventual path closes its items).
+/// answer.
 enum OpenWork {
     static func settle(events: [RunEvent], reason: SettleReason) -> [EventSettlement] {
         events.compactMap { event in
@@ -54,7 +54,7 @@ enum StopAction: Equatable, Sendable {
     case closeInput
     /// The agent never answered: settle all open work and mark the session stopped (after 10 s).
     case forceFinalize
-    /// Stop was pressed before the turn had a provider turn id (T3Code: "Stop sent before the turn started"):
+    /// Stop was pressed before the turn had a provider turn id:
     /// there is nothing to interrupt yet, so the manager cancels the pending launch/send; the interrupt follows
     /// as soon as `markTurnStarted()` is called, and the 10 s deadline finishes it anyway.
     case cancelPending
@@ -167,7 +167,7 @@ struct SessionApprovals: Equatable, Sendable {
 // MARK: - Background work
 
 /// Background work of one session (sub-agents, monitors, background commands). While any is running the session
-/// is neither "done" nor idle-released. T3Code: packages/shared/src/orchestrationV2PendingBackgroundWork.ts.
+/// is neither "done" nor idle-released.
 struct BackgroundRoster: Equatable, Sendable {
     enum Kind: String, Codable, Sendable { case subagent, monitor, command, other }
     enum CancelReason: String, Codable, Sendable { case stopped, processExited, sessionClosed }

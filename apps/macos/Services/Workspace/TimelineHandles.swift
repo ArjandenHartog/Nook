@@ -1,6 +1,6 @@
 import Foundation
 
-/// T3Code ships handles, not bodies: a huge output stays out of the timeline and out of memory; the row shows a
+/// Uses lightweight handles instead of full bodies: a huge output stays out of the timeline and out of memory; the row shows a
 /// preview and the lead's file layer stores the body under `id`.
 enum OutputSpill {
     struct Handle: Equatable, Codable, Sendable {
@@ -20,7 +20,7 @@ enum OutputSpill {
         return Handle(id: id, byteCount: output.utf8.count, previewHead: head, truncatedHead: head.count < output.count)
     }
 
-    /// Cuts on a character boundary within `limit` UTF-8 bytes (T3Code: detail strings 32 KiB).
+    /// Cuts on a character boundary within `limit` UTF-8 bytes.
     static func clipDetail(_ text: String, limit: Int = 32 * 1024) -> String {
         guard text.utf8.count > limit else { return text }
         var bytes = 0
@@ -50,7 +50,7 @@ enum PlanPreview {
         text.count > 900 || text.split(omittingEmptySubsequences: false, whereSeparator: \.isNewline).count > 20
     }
 
-    /// First `lines` non-empty lines; "..." marks that more follows (T3Code buildCollapsedProposedPlanPreviewMarkdown).
+    /// First `lines` non-empty lines; "..." marks that more follows.
     static func preview(_ text: String, lines maxLines: Int = 10) -> String {
         let all = text.split(omittingEmptySubsequences: false, whereSeparator: \.isNewline)
             .map { $0.replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression) }

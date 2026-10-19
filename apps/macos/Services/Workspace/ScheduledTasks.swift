@@ -1,6 +1,6 @@
 import Foundation
 
-// Scheduled tasks (T3Code's `scheduledTasks/`): when a task runs next, which runs are skipped, and the guards that keep
+// Scheduled tasks: when a task runs next, which runs are skipped, and the guards that keep
 // a task from overlapping itself. Foundation only; the lead's service owns the timers, the process and the storage.
 
 /// When a task runs. Decoding is tolerant: a missing field falls back to a safe default and an unknown type becomes
@@ -13,7 +13,7 @@ enum ScheduleRule: Equatable, Sendable, Codable {
     /// Only when its URL receives a signed request.
     case webhook
 
-    /// T3Code's one-minute floor. Rows saved before the floor stay readable but do not keep their old rate.
+    /// One-minute minimum interval floor. Rows saved before the floor stay readable but do not keep their old rate.
     static let minimumIntervalSeconds = 60
 
     var isWebhook: Bool { if case .webhook = self { return true }; return false }
@@ -53,10 +53,10 @@ enum ScheduleRule: Equatable, Sendable, Codable {
 }
 
 enum ScheduleTiming {
-    /// T3Code skips a fixed-time run that is more than this late (the Mac slept through it) instead of running it late.
+    /// Skips a fixed-time run that is more than this late (the Mac slept through it) instead of running it late.
     static let missedGraceSeconds: TimeInterval = 10 * 60
 
-    /// The next run. Intervals count from when the previous run FINISHED (T3Code), so a slow run drifts the schedule
+    /// The next run. Intervals count from when the previous run FINISHED, so a slow run drifts the schedule
     /// and runs never pile up. A fixed time is the next matching weekday and wall-clock time after `now`.
     /// Webhooks have none. A result at or before `now` means "due".
     static func nextRun(rule: ScheduleRule, lastFinished: Date?, now: Date, calendar: Calendar = .current) -> Date? {
@@ -201,7 +201,7 @@ struct ScheduledTask: Codable, Equatable, Identifiable, Sendable {
     }
 
     /// Rows left `running` by a restart become failed and are rescheduled, so a crashed run neither blocks the task
-    /// forever nor counts as success (T3Code resets them at startup). Other rows are returned unchanged.
+    /// forever nor counts as success. Other rows are returned unchanged.
     static func recoverInterrupted(tasks: [ScheduledTask], now: Date = Date(), calendar: Calendar = .current) -> [ScheduledTask] {
         tasks.map { task in
             guard task.lastStatus == .running else { return task }
@@ -241,7 +241,7 @@ struct RunGate: Sendable {
     mutating func finish(_ taskID: UUID) { active.remove(taskID) }
 }
 
-/// T3Code bounds the deliveries a task holds (waiting for its permit plus the running one) at 20 and REJECTS the next
+/// Bounds the deliveries a task holds (waiting for its permit plus the running one) at 20 and REJECTS the next
 /// one with `queue_full` (HTTP rate limited); it never drops an older delivery, which the sender already got "accepted" for.
 struct WebhookQueue: Sendable {
     static let maxQueuedPerTask = 20
