@@ -45,7 +45,7 @@ enum AgentCommand {
         var runID: UUID
         /// Nook's workspace bridge (terminal, browser, pull requests) as an MCP server; nil leaves the agent as it is.
         var bridge: BridgeLaunch? = nil
-        /// Claude Code knows `--thinking-display`: ask for summarized thinking (T3Code's way), so newer models show it.
+        /// Claude Code knows `--thinking-display`: ask for summarized thinking, so newer models show it.
         var thinkingDisplay = false
         /// An ACP agent you added: its command, run by `executable` (your login shell).
         var customAgent: CustomAgent? = nil
@@ -65,7 +65,7 @@ enum AgentCommand {
                 // Permission prompts arrive as control_request on stdout; Nook replies via stdin.
                 "--permission-prompt-tool", "stdio",
                 "--permission-mode", claudePermissionMode(mode: input.mode, permission: input.permission),
-                // Newer models leave their thinking empty unless summaries are asked for (T3Code: showThinkingSummaries).
+                // Newer models leave their thinking empty unless summaries are asked for.
                 "--settings", #"{"showThinkingSummaries":true}"#
             ]
             if input.thinkingDisplay { arguments += ["--thinking-display", "summarized"] }
@@ -89,7 +89,7 @@ enum AgentCommand {
                              "--sandbox", codexSandbox(mode: input.mode, permission: input.permission),
                              "--cd", input.workingDirectory]
             if !input.model.isEmpty { arguments += ["--model", input.model] }
-            // Detailed reasoning summaries, as T3Code asks for them: the timeline shows how Codex thinks, not only what it did.
+            // Detailed reasoning summaries: the timeline shows how Codex thinks, not only what it did.
             arguments += ["-c", "model_reasoning_summary=\"detailed\""]
             if let bridge = input.bridge { arguments += bridge.codexArguments(runID: input.runID) }
             var prompt = input.prompt

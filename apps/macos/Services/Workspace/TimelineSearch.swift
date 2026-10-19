@@ -1,6 +1,6 @@
 import Foundation
 
-// "Find in session" over the timeline (T3Code MessagesTimeline). Matching is case- and diacritic-insensitive and the
+// "Find in session" over the timeline. Matching is case- and diacritic-insensitive and the
 // query is literal text, never a pattern. Ranges are UTF-16 offsets so SwiftUI/NSString highlighting can use them.
 
 struct TimelineSearchResult: Equatable, Sendable {

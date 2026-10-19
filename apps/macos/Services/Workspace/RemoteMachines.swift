@@ -1,6 +1,6 @@
 import Foundation
 
-// Sessions on another machine, over SSH (T3Code runs its server on a remote host; Nook needs only SSH). The agent runs
+// Sessions on another machine, over SSH. The agent runs
 // there and speaks over the SSH connection exactly as it does locally: Claude Code's stream-json, Codex's app-server and
 // ACP all use stdin and stdout. Git runs there too, over ssh: status, diff, commit, push, snapshots per turn and
 // worktrees (in ~/.nook/worktrees on that machine). Only the workspace bridge needs this Mac and stays off. Foundation only, so tests can use it independently.
@@ -152,8 +152,7 @@ enum RemoteShell {
                                 environment: ProcessInfo.processInfo.environment, timeout: 20))?.status == 0
     }
 
-    /// Where a session's worktree goes on the remote machine: ~/.nook/worktrees/<repository>/<branch> (T3Code keeps them
-    /// in ~/.t3/worktrees the same way).
+    /// Where a session's worktree goes on the remote machine: ~/.nook/worktrees/<repository>/<branch>.
     static func worktreeRoot(home: String) -> String {
         (home as NSString).appendingPathComponent(".nook/worktrees")
     }

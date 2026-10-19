@@ -1,7 +1,7 @@
 import AppKit
 import Foundation
 
-/// The one git button (T3Code's quick action): the state of the session's branch decides between commit, push, pull
+/// The one git button: the state of the session's branch decides between commit, push, pull
 /// request and pull, and the agent writes the commit message and the pull request.
 extension WorkspaceManager {
     /// Where the button stands for a session; nil outside a repository.
@@ -96,7 +96,7 @@ extension WorkspaceManager {
             if let create = pullRequestCreate, let link = try await create(repo, title, body, branch, base) {
                 openPullRequests[id] = link
                 append(id, RunEvent(kind: .system, text: tr("ws.event.prOpened", link.absoluteString)))
-                // A GitHub pull request Nook opened for the session is watched from the start (T3Code does the same).
+                // A GitHub pull request Nook opened for the session is watched from the start.
                 if self.run(id)?.prWatch == nil, PullRequestWatch.canWatch(link) { watchPullRequest(id, url: link) }
                 return link
             }

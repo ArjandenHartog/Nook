@@ -1,6 +1,6 @@
 import Foundation
 
-/// Codex sessions over `codex app-server`, the way T3Code runs them: one process per session that stays alive between
+/// Codex sessions over `codex app-server`: one process per session that stays alive between
 /// turns. A turn is `turn/start` on the session's thread; while it runs you can steer it (`turn/steer`), stop it
 /// (`turn/interrupt`), and answer Codex's approval requests and questions here. When this Codex has no usable app-server
 /// (too old), the session falls back to `codex exec` for good, and nothing is lost.
@@ -106,7 +106,7 @@ extension WorkspaceManager {
         var params = CodexRPC.turnStartParams(threadID: thread, text: text, cwd: run.workingDirectory, model: run.model,
                                               mode: run.mode, permission: run.permission, planModel: planModel,
                                               effort: run.effort)
-        // What MCP apps told the agent: text an MCP server wrote, so it goes in as untrusted context (as T3Code does).
+        // What MCP apps told the agent: text an MCP server wrote, so it goes in as untrusted context.
         let appContexts = takeMcpAppContexts(id)
         if !appContexts.isEmpty {
             params["additionalContext"] = Dictionary(uniqueKeysWithValues: appContexts.map { ($0.key, ["kind": "untrusted", "value": $0.text]) })
@@ -250,7 +250,7 @@ extension WorkspaceManager {
             case .commandFinished(let callID, let command, let output, let exitCode)
                 where turns[id] == nil && run(id)?.status.isActive != true:
                 // A command left running in the background finished after the turn: its result goes to Codex as a new
-                // turn (T3Code's continuation), so Codex can act on it.
+                // turn, so Codex can act on it.
                 handleCodex(event, id: id)
                 append(id, RunEvent(kind: .system, text: tr("ws.wake.command", ToolSummary.oneLine(command, 80)), tool: "wake"))
                 let message = BackgroundWork.codexMessage(command: command, exitCode: exitCode, output: output)

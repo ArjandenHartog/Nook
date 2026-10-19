@@ -15,7 +15,7 @@ extension WorkspaceManager {
     // MARK: Capture
 
     /// Reads the app's page through Codex (`mcpServer/resource/read`), saves it with its Content-Security-Policy and puts
-    /// the reference on the tool call. Any failure leaves a plain tool row, as in T3Code.
+    /// the reference on the tool call. Any failure leaves a plain tool row.
     func captureMcpApp(_ id: UUID, _ client: CodexAppServerClient, callID: String, server: String, tool: String,
                        arguments: String?, result: String?, resourceUri: String) {
         guard let thread = client.threadID else { return }

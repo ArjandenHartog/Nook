@@ -1,6 +1,6 @@
 import Foundation
 
-/// Claude Code kept alive between turns, the way T3Code runs it: after a turn the process waits on stdin, and the next
+/// Claude Code kept alive between turns: after a turn the process waits on stdin, and the next
 /// message goes straight to it, warm cache and all. A change of model, mode or rights (they are command-line flags),
 /// a copy of the conversation, or ten quiet minutes start a fresh process that resumes the conversation instead.
 extension WorkspaceManager {
@@ -54,7 +54,7 @@ extension WorkspaceManager {
     }
 
     /// Work Claude Code started in the background (a command or subagent run in the background) finished after the turn,
-    /// and Claude Code carries on by itself (T3Code wakes the thread the same way): the waiting process becomes a turn
+    /// and Claude Code carries on by itself: the waiting process becomes a turn
     /// again, so what it does shows up live and ends like any other turn.
     func wakeParkedClaude(_ id: UUID) {
         guard processes[id] == nil, var run = run(id), let idle = claudeIdle[id], idle.process.isRunning else { return }
@@ -71,7 +71,7 @@ extension WorkspaceManager {
     }
 
     /// How long a waiting session stays open: thirty minutes, or four hours while it has background work running
-    /// (T3Code's limits), so the agent is still there to pick up the result.
+    ///, so the agent is still there to pick up the result.
     func idleSeconds(_ id: UUID, _ normal: UInt64) -> UInt64 {
         backgroundWork.contains(id) ? 4 * 60 * 60 : normal
     }

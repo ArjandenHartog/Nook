@@ -1,6 +1,6 @@
 import Foundation
 
-// Unsent text per session and the prompt stash (Mod+S in T3Code's ChatComposer). Stored, so decoding is tolerant.
+// Unsent text per session and the prompt stash. Stored, so decoding is tolerant.
 
 struct DraftEntry: Codable, Equatable, Sendable {
     var text: String

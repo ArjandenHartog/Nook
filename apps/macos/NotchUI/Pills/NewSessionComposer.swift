@@ -179,7 +179,7 @@ struct NewSessionComposer: View {
 
     // MARK: Choices in the box
 
-    /// Agent, account and model in one panel, as T3Code's model picker: agents in a rail, their models with a search.
+    /// Agent, account and model in one panel: agents in a rail, their models with a search.
     private var agentMenu: some View {
         let profile = app.profiles.profile(id: config.profileID)
         let name = profile.map { AccountLabel.name($0, app: app) }

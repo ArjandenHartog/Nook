@@ -465,7 +465,7 @@ final class WorkspaceBridge: ObservableObject {
 
     // MARK: Simulator
 
-    /// T3Code's device tools: the simulators, one opened in Nook's Simulator page with an agent-device command to drive
+    /// The device tools: the simulators, one opened in Nook's Simulator page with an agent-device command to drive
     /// it, its screenshot, and closing it.
     private func device(_ tool: BridgeTool, _ arguments: [String: Any], _ caller: BridgeCaller) async throws -> BridgeRPC.ToolResult {
         if case .refuse(let reason) = verdict(tool, caller) { return .error(Self.refusal(reason)) }
@@ -722,7 +722,7 @@ final class WorkspaceBridge: ObservableObject {
                                            role: role, wake: !wait)
         let childID: UUID
         do {
-            // The task works in the same folder as its parent, as T3Code's child threads do.
+            // The task works in the same folder as its parent.
             childID = try await workspace.start(config, allowSharedFolder: true)
         } catch {
             audit(.delegateTask, caller, task, "mislukt: \(error.localizedDescription)")

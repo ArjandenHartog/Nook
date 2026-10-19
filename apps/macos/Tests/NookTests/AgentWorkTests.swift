@@ -1,7 +1,7 @@
 import XCTest
 
-/// What the Agents tab took from T3Code in its third round: the agent's task list from each protocol and its subagents.
-final class T3RoundThreeTests: XCTestCase {
+/// The Agents tab's work features: the agent's task list from each protocol and its subagents.
+final class AgentWorkTests: XCTestCase {
     // MARK: Tasks
 
     func testClaudeTodoWrite() {

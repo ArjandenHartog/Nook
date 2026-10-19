@@ -3,7 +3,7 @@ import Foundation
 import CryptoKit
 #endif
 
-/// Installs an ACP agent that the registry offers only as a download (T3Code does the same): fetched over HTTPS, checked
+/// Installs an ACP agent that the registry offers only as a download: fetched over HTTPS, checked
 /// against the registry's SHA-256 before anything is unpacked, unpacked with the system's own tools into a folder of its
 /// own in Application Support, and only then made into an account. Nothing runs during the install.
 enum AcpInstaller {

@@ -1,6 +1,6 @@
 import Foundation
 
-// How a session's timeline reads in the narrow notch, after T3Code's work log: a finished turn folds into "Worked for
+// How a session's timeline reads in the narrow notch: a finished turn folds into "Worked for
 // 2m 13s" between your message and the agent's answer, consecutive tool calls become one line that says what they did
 // ("Ran 3 commands and changed 2 files"), and while the agent works one live line shows what it is doing and thinking.
 // Everything in this file depends only on Foundation so tests can use it independently.
@@ -216,7 +216,7 @@ enum TimelinePresentation {
     }
 }
 
-/// A subagent the agent started (Claude Code's Task or Agent tool), as T3Code's subagent bar shows it.
+/// A subagent the agent started (Claude Code's Task or Agent tool)'s subagent bar shows it.
 struct SubagentInfo: Identifiable, Equatable, Sendable {
     var id: UUID
     /// "Explore", "general-purpose"…
@@ -250,7 +250,7 @@ enum Subagents {
     }
 }
 
-/// What one turn changed (T3Code's changed files per turn): the files, from the turn's own edits and file changes, and
+/// What one turn changed: the files, from the turn's own edits and file changes, and
 /// the snapshots around it when the session has them.
 enum TurnChanges {
     struct Turn: Equatable, Sendable {
@@ -299,10 +299,10 @@ enum TurnChanges {
     }
 }
 
-/// Work an agent left running in the background, finished after its turn (T3Code's continuation).
+/// Work an agent left running in the background, finished after its turn.
 enum BackgroundWork {
     /// The session still has work running in the background after its turn, so it should stay open (up to four hours
-    /// instead of thirty minutes, as T3Code): from the latest turn, a tool still running when it ended, or one started
+    /// instead of thirty minutes): from the latest turn, a tool still running when it ended, or one started
     /// to run in the background. It ends with a turn the agent woke up for by itself. `before` is what was known.
     static func pending(after events: [RunEvent], before: Bool) -> Bool {
         guard let turn = TimelinePresentation.split(events).last else { return before }

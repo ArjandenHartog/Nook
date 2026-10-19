@@ -1,6 +1,6 @@
 import Foundation
 
-// The iOS Simulator next to your sessions (T3Code shows a preview of the app you work on): the simulators that are
+// The iOS Simulator next to your sessions: the simulators that are
 // running, from `xcrun simctl list devices booted -j`, and a picture of the screen, refreshed while you look.
 // Foundation only, so tests can use the parsing.
 
@@ -58,7 +58,7 @@ enum Simulators {
     }
 }
 
-/// What you can change on a simulator from Nook (T3Code's device actions), as `xcrun simctl` arguments.
+/// What you can change on a simulator from Nook, as `xcrun simctl` arguments.
 enum SimulatorAction: Equatable, Sendable {
     case appearance(dark: Bool)
     case textSize(SimulatorTextSize)
@@ -101,7 +101,7 @@ enum SimulatorAction: Equatable, Sendable {
     }
 }
 
-/// T3Code's four text sizes and the iOS content-size categories behind them.
+/// Four text sizes and the iOS content-size categories behind them.
 enum SimulatorTextSize: String, CaseIterable, Identifiable, Sendable {
     case small, standard, large, extraLarge
 

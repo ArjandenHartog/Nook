@@ -1,6 +1,6 @@
 import Foundation
 
-// The one-line "3 sessions settled · ⌘Z" notice. T3Code keeps it in a UI store and only in the sidebar footer; here the
+// The one-line "3 sessions settled · ⌘Z" notice. Here the
 // decision lives in a value so the list and the composer line show the same entry. Foundation only.
 
 struct UndoEntry: Equatable, Sendable {
@@ -20,7 +20,7 @@ struct UndoLog: Equatable, Sendable {
 
     private(set) var entries: [UndoEntry] = []
 
-    /// Same kind as the live top entry merges into it (T3Code: "Settled 3 threads"), and restarts its window.
+    /// Same kind as the live top entry merges into it, and restarts its window.
     mutating func record(_ kind: UndoEntry.Kind, ids: [String], now: Date) {
         prune(now)
         let ids = ids.reduce(into: [String]()) { if !$0.contains($1) { $0.append($1) } }

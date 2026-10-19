@@ -1,6 +1,6 @@
 import Foundation
 
-// MCP Apps (the `io.modelcontextprotocol/ui` extension), as T3Code hosts them: a tool whose result has a `ui://`
+// MCP Apps (the `io.modelcontextprotocol/ui` extension) hosts them: a tool whose result has a `ui://`
 // resource shows that page in the timeline, and the page talks to Nook over JSON-RPC (postMessage) to call the server's
 // tools, read its resources, open links, send a message, change its size or go fullscreen. Codex fetches the page and
 // runs the tools for Nook (`mcpServer/resource/read`, `mcpServer/tool/call`); a page another agent embedded in its tool
@@ -228,7 +228,7 @@ enum McpApp {
     }
 }
 
-/// The host side of one app's JSON-RPC conversation (T3Code's `makeMcpAppHost`). It checks every request and answers;
+/// The host side of one app's JSON-RPC conversation. It checks every request and answers;
 /// what needs Nook (calling a tool, a confirmation, a window) goes through `actions`.
 final class McpAppHost {
     enum DisplayMode: String { case inline, fullscreen }

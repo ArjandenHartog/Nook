@@ -1,12 +1,12 @@
 import Foundation
 
-// The iOS Simulator as T3Code drives it: expo-device-hub (with serve-sim) runs on this Mac on a loopback port, streams the
+// The iOS Simulator: expo-device-hub (with serve-sim) runs on this Mac on a loopback port, streams the
 // screen as MJPEG and takes touches, buttons, keys and rotation over a WebSocket; agent-device lets agents drive the app
 // (snapshot, click, fill). This is the part without AppKit or networking: versions and paths, command lines, the hub's
 // answers, the input frames and the coordinate rules. Foundation only, so tests can use it.
 
 enum DeviceHub {
-    /// The versions T3Code pins (deviceToolVersions.json).
+    /// The pinned versions.
     static let hubPackage = "expo-device-hub"
     static let hubVersion = "0.15.3"
     static let agentPackage = "agent-device"
@@ -184,7 +184,7 @@ enum DeviceHub {
         }
     }
 
-    /// HID usages by macOS virtual key code (the physical key, as T3Code maps `KeyboardEvent.code`): letters, digits,
+    /// HID usages by macOS virtual key code (the physical key maps `KeyboardEvent.code`): letters, digits,
     /// punctuation, editing keys, arrows and modifiers. Other keys are not sent.
     static let hidUsage: [UInt16: Int] = [
         0x00: 0x04, 0x0B: 0x05, 0x08: 0x06, 0x02: 0x07, 0x0E: 0x08, 0x03: 0x09, 0x05: 0x0A, 0x04: 0x0B, 0x22: 0x0C,
@@ -262,7 +262,7 @@ enum DeviceHub {
         """
     }
 
-    /// What device_open tells the agent, after T3Code's quick start.
+    /// What device_open tells the agent: a quick start.
     static func quickStart(device: String, version: String, command: String, targetArgs: [String]) -> String {
         let x = shellQuote(command)
         let t = targetArgs.map(shellQuote).joined(separator: " ")
@@ -344,7 +344,7 @@ struct AvccChunk: Equatable, Sendable {
     var payload: Data
 }
 
-/// Cuts the AVCC stream into its chunks as bytes arrive (T3Code's AvccDemuxer); unknown tags are skipped.
+/// Cuts the AVCC stream into its chunks as bytes arrive; unknown tags are skipped.
 struct AvccDemuxer {
     private var buffer = Data()
     static let maxChunk = 32 * 1024 * 1024

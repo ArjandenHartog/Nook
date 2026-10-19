@@ -1,6 +1,6 @@
 import Foundation
 
-/// The search engine of the workspace browser (T3Code lets you pick one): what you type there that is not an address
+/// The search engine of the workspace browser: what you type there that is not an address
 /// becomes a search with it. Foundation only, so tests can use it.
 enum BrowserSearchEngine: String, CaseIterable, Identifiable, Sendable {
     case duckDuckGo = "duckduckgo"
