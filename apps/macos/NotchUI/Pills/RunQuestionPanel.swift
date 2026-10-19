@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// A question from the agent in place of the composer, one at a time (T3Code's way): its options as buttons (keys 1–9
+/// A question from the agent in place of the composer, one at a time: its options as buttons (keys 1–9
 /// pick one), several for a multiple choice, or an answer of your own. A single choice moves on by itself.
 struct RunQuestionPanel: View {
     let question: PendingQuestion
@@ -121,7 +121,7 @@ struct RunQuestionPanel: View {
         .buttonStyle(.plain)
     }
 
-    /// Keys 1–9 choose an option, as in T3Code. Hidden buttons carry the shortcuts.
+    /// Keys 1–9 choose an option. Hidden buttons carry the shortcuts.
     private func digitShortcuts(_ item: RunQuestion) -> some View {
         ZStack {
             ForEach(Array(item.options.prefix(9).enumerated()), id: \.offset) { number, option in

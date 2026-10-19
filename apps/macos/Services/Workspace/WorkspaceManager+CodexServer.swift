@@ -1,6 +1,6 @@
 import Foundation
 
-/// Codex sessions over `codex app-server`, the way T3Code runs them: one process per session that stays alive between
+/// Codex sessions over `codex app-server`: one process per session that stays alive between
 /// turns. A turn is `turn/start` on the session's thread; while it runs you can steer it (`turn/steer`), stop it
 /// (`turn/interrupt`), and answer Codex's approval requests and questions here. When this Codex has no usable app-server
 /// (too old), the session falls back to `codex exec` for good, and nothing is lost.

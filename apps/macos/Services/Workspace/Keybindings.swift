@@ -1,6 +1,6 @@
 import Foundation
 
-// Configurable shortcuts (T3Code `keybindings.ts`): rules `{key, command, when}`, the LAST matching rule wins, invalid
+// Configurable shortcuts: rules `{key, command, when}`, the LAST matching rule wins, invalid
 // rules are skipped. `mod` is Command on macOS.
 
 struct KeyChord: Equatable, Hashable, Sendable {
@@ -104,7 +104,7 @@ struct KeyChord: Equatable, Hashable, Sendable {
     }
 }
 
-/// `a && !b || (c)`; identifiers come from a context, unknown ones are false (T3Code).
+/// `a && !b || (c)`; identifiers come from a context, unknown ones are false.
 indirect enum WhenExpression: Equatable, Sendable {
     case ident(String)
     case not(WhenExpression)
@@ -227,7 +227,7 @@ enum Keybindings {
     }
 
     /// Skips bad rules and reports them; unknown fields are ignored. An empty or unparseable file gives no rules
-    /// (the caller then uses `defaults`), as in T3Code.
+    /// (the caller then uses `defaults`).
     static func load(_ data: Data) -> LoadResult {
         if data.allSatisfy({ $0 == 0x20 || $0 == 0x0A || $0 == 0x0D || $0 == 0x09 }) {
             return LoadResult(rules: [], problems: [], state: .empty)
@@ -307,7 +307,7 @@ enum Keybindings {
         "session.undo", "session.interrupt",
     ]
 
-    /// Adapted from T3Code's chat defaults. `session.interrupt` stays unbound on purpose (T3Code `thread.stop`).
+    /// Default chat and workspace keybindings. `session.interrupt` stays unbound on purpose.
     static let defaults: [KeybindingRule] = [
         KeybindingRule(key: "mod+enter", command: "composer.send", when: "composerFocus && !turnRunning"),
         KeybindingRule(key: "mod+enter", command: "composer.sendAlternate", when: "composerFocus && turnRunning"),

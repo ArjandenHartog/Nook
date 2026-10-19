@@ -10,7 +10,7 @@ struct DevServer: Equatable, Identifiable, Sendable {
     var url: URL { URL(string: "http://localhost:\(port)")! }
 }
 
-/// Finds the dev servers of a folder the way T3Code's preview does: every listening TCP socket on this Mac (`lsof`), kept
+/// Finds the dev servers of a folder: every listening TCP socket on this Mac (`lsof`), kept
 /// when the process works in the folder (or below it). No network traffic; `lsof` only reads this Mac's own table.
 enum DevServerScanner {
     /// Ports that are never a page to open (databases, caches, debuggers).

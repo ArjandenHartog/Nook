@@ -69,7 +69,7 @@ struct AgentRunPanel: View {
             .onAppear {
                 workspace.loadTimeline(runID)
                 if run.repoRoot != nil { workspace.refreshGit(runID) }
-                // The agent's connection opens now, so your first message goes straight in (T3Code keeps it alive too).
+                // The agent's connection opens now, so your first message goes straight in.
                 workspace.prewarm(runID)
                 focused = true
                 Task { repository = await workspace.githubRepository(runID) }
@@ -318,7 +318,7 @@ struct AgentRunPanel: View {
                             .font(NookTheme.font(12.5))
                             .foregroundStyle(NookTheme.textTertiary)
                     }
-                    // Finished turns fold to "Worked for …", tool calls in a row to one sentence (after T3Code).
+                    // Finished turns fold to "Worked for …", tool calls in a row to one sentence.
                     ForEach(blocks) { block in
                         TimelineBlockView(block: block, expanded: openBlocks, toggle: toggleBlock) { event in
                             AnyView(
@@ -343,7 +343,7 @@ struct AgentRunPanel: View {
             }
             .padding(.vertical, 4)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            // Scrolling away from the end stops the following until you come back (T3Code's scroll anchoring).
+            // Scrolling away from the end stops the following until you come back.
             .onScrollGeometryChange(for: Bool.self) { geometry in
                 geometry.contentOffset.y + geometry.containerSize.height >= geometry.contentSize.height - 48
             } action: { _, nowAtEnd in
@@ -471,7 +471,7 @@ struct AgentRunPanel: View {
         } else if event.kind == .user {
             eventView(event)
                 .contextMenu {
-                    // T3Code's "edit from here": the worktree's files go back to how they were before this message.
+                    // "Edit from here": the worktree's files go back to how they were before this message.
                     Button(tr("ws.revert.menu")) {
                         revertError = nil
                         revertTarget = event
@@ -484,7 +484,7 @@ struct AgentRunPanel: View {
         } else if event.kind == .assistant {
             eventView(event)
                 .contextMenu {
-                    // T3Code's "Fork from this response".
+                    // "Fork from this response".
                     Button(tr("agents.fork.fromResponse")) { forkThrough(event) }
                         .disabled(!workspace.canTransfer(runID))
                 }
@@ -598,7 +598,7 @@ struct AgentRunPanel: View {
         let active = run.status.isActive
         let send = {
             let text = draft.trimmingCharacters(in: .whitespacesAndNewlines)
-            // Return while a queued message is open in the box saves it (T3Code: the check mark) instead of sending.
+            // Return while a queued message is open in the box saves it instead of sending.
             if editingQueued != nil { saveQueuedEdit(); return }
             guard !text.isEmpty, !active else { return }
             let outgoing = composerModel.outgoing(text)
@@ -606,7 +606,7 @@ struct AgentRunPanel: View {
             workspace.send(runID, text: outgoing.send)
         }
         // Codex over app-server and Claude Code take a new message during the turn (steering); others get it after the turn.
-        // Return does what you chose in Settings, Cmd+Return the other (T3Code's queue / steer).
+        // Return does what you chose in Settings, Cmd+Return the other.
         let canSteer = active && workspace.canSteer(runID)
         let preferred: ComposerDispatch.Intent = workspace.settings.steerByDefault ? .steer : .queue
         func deliver(_ intent: ComposerDispatch.Intent) -> () -> Void {
@@ -678,7 +678,7 @@ struct AgentRunPanel: View {
         }
     }
 
-    /// The agent with its account and the model (T3Code's model picker). A model counts from the next turn; another account
+    /// The agent with its account and the model. A model counts from the next turn; another account
     /// or agent moves the session there with a summary of what happened (shown in the timeline).
     private func modelMenu(_ run: WorkspaceRun) -> some View {
         let profile = app.profile(for: run)

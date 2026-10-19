@@ -272,8 +272,8 @@ final class WorkspaceBridge: ObservableObject {
 
         lines.append("")
         lines.append("## Browser")
-        let browser = BrowserStore.shared
-        if let url = browser.webView.url {
+        // Describing the browser must not start it: never opened means nothing open.
+        if let browser = BrowserStore.existing, let url = browser.webView.url {
             lines.append("- \(browser.webView.title ?? "") · \(url.absoluteString)" + (browser.openedBy.map { " (opened by \($0))" } ?? ""))
         } else {
             lines.append("- nothing open")
@@ -657,7 +657,7 @@ final class WorkspaceBridge: ObservableObject {
                                            role: role, wake: !wait)
         let childID: UUID
         do {
-            // The task works in the same folder as its parent, as T3Code's child threads do.
+            // The task works in the same folder as its parent.
             childID = try await workspace.start(config, allowSharedFolder: true)
         } catch {
             audit(.delegateTask, caller, task, "mislukt: \(error.localizedDescription)")
