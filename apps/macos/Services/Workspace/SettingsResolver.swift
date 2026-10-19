@@ -1,6 +1,6 @@
 import Foundation
 
-// Settings inheritance (T3Code project settings): a value comes from the first layer that sets it, in the order
+// Settings inheritance: a value comes from the first layer that sets it, in the order
 // Project -> Environment -> repository file -> Built-in. "Inherit" is simply "this layer does not set the key".
 
 /// A JSON-ish setting value.
@@ -145,7 +145,7 @@ enum ProjectScope: Equatable, Sendable {
     }
 }
 
-/// "Applying settings for <project> on|across <environment>" (T3Code `SettingsScopeSentence`).
+/// "Applying settings for <project> on|across <environment>".
 struct ScopeDescription: Equatable, Sendable {
     enum Connector: String, Sendable { case on, across }
 

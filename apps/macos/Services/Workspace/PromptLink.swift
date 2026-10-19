@@ -1,6 +1,6 @@
 import Foundation
 
-// `nook://prompt?text=…&project=…&agent=…&model=…` (T3Code prompt links). A link only fills a draft; it never sends,
+// `nook://prompt?text=…&project=…&agent=…&model=…`. A link only fills a draft; it never sends,
 // never sets permissions or a branch. Hidden characters are removed because they can smuggle instructions to the agent.
 
 struct PromptLink: Equatable, Sendable {

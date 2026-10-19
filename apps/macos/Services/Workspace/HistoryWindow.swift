@@ -1,6 +1,6 @@
 import Foundation
 
-// Bounded history (T3Code threadHistoryPaging.ts: 10 user turns / 75 items / 1 MiB): a cold open renders only the tail
+// Bounded history: a cold open renders only the tail
 // of the timeline and "Load earlier turns" widens it. A window always starts at a user message so no turn is cut in
 // half, except when one single turn alone exceeds the item cap: the hard cap wins then.
 

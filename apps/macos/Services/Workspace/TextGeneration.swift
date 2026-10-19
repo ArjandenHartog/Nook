@@ -1,8 +1,8 @@
 import Foundation
 
-/// Short pieces of text an agent writes for Nook, the way T3Code has them written: a session title, a commit message,
+/// Short pieces of text an agent writes for Nook: a session title, a commit message,
 /// a pull request. One headless call to Claude Code (a small model, no tools, no hooks) or Codex (`exec`, read-only,
-/// ephemeral), with a JSON schema for the answer. The prompts are T3Code's.
+/// ephemeral), with a JSON schema for the answer.
 enum TextGeneration {
     enum Engine: Equatable, Sendable { case claude, codex }
 
@@ -117,7 +117,7 @@ enum TextGeneration {
         return (try? JSONSerialization.jsonObject(with: Data(text[start...end].utf8))) as? [String: Any]
     }
 
-    // MARK: Cleaning up answers (T3Code's rules)
+    // MARK: Cleaning up answers
 
     /// First line, no quotes or backticks around it, single spaces, at most 120 characters. Nil when nothing is left.
     static func title(_ raw: String) -> String? {
@@ -185,7 +185,7 @@ enum TextGenerationRunner {
             guard (try? Data(TextGeneration.json(schema).utf8).write(to: schemaFile)) != nil else { return nil }
             arguments = TextGeneration.codexArguments(schemaPath: schemaFile.path, outputPath: answerFile.path)
         }
-        // Claude Code works in an empty folder (as in T3Code), so the call leaves no trace in the project.
+        // Claude Code works in an empty folder, so the call leaves no trace in the project.
         let folder = engine == .claude || !FileManager.default.fileExists(atPath: cwd) ? temp.path : cwd
         let process = AgentProcess(spec: LaunchSpec(executable: executable, arguments: arguments, extraEnvironment: environment,
                                                     workingDirectory: folder, initialInput: [prompt], keepsInputOpen: true))

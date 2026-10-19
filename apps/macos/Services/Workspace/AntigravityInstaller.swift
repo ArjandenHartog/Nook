@@ -1,7 +1,7 @@
 import CryptoKit
 import Foundation
 
-/// Installs Google's Antigravity ACP server the way T3Code does: the pinned release for this Mac, checked on size and
+/// Installs Google's Antigravity ACP server: the pinned release for this Mac, checked on size and
 /// SHA-256 before anything is unpacked, exactly the two expected files of the expected sizes, a test start that must
 /// answer as Antigravity with Google sign-in, and only then made active. Nothing is installed when a step fails.
 @MainActor

@@ -110,7 +110,7 @@ final class InboxLayoutTests: XCTestCase {
         XCTAssertEqual(s.flatMap { $0.rows.map(\.id) }.sorted(), ["a", "p", "sn", "w", "z"])
     }
 
-    // MARK: Receding (T3Code shouldRecedeSidebarThread)
+    // MARK: Receding
 
     func testRecedingRule() {
         func rec(_ r: InboxRow, woke: Bool = false, selected: Bool = false) -> Bool {

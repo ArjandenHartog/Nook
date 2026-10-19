@@ -1,6 +1,6 @@
 import XCTest
 
-/// nook.json / t3.json: the same schema as T3Code, read leniently.
+/// nook.json / t3.json: project script definitions, read leniently.
 final class ProjectScriptsTests: XCTestCase {
     func testParse() {
         let json = #"{"scripts":[{"id":"dev","name":"Dev server","command":"pnpm dev","previewUrl":"http://localhost:5173","autoOpenPreview":true},{"name":"Install","command":"pnpm install","runOnWorktreeCreate":true},{"name":"Leeg"},{"command":"make test"}]}"#
