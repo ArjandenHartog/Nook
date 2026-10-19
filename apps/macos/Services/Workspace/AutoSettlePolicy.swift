@@ -1,6 +1,6 @@
 import Foundation
 
-// When a session settles by itself (T3Code ThreadSettlementService.isAutoSettlementCandidate). The blockers are the
+// When a session settles by itself. The blockers are the
 // point: nothing that still runs, waits for you, or that you pinned or snoozed disappears behind your back.
 
 enum AutoSettlePolicy {
@@ -49,7 +49,7 @@ enum AutoSettlePolicy {
         if row.isActive { return .keep(.turnRunning) }
         if row.hasBackgroundWork { return .keep(.backgroundWork) }
         if row.hasQueued { return .keep(.queuedMessages) }
-        // A snooze that already woke (T3Code: finished after it began) does not block.
+        // A snooze that already woke does not block.
         if SnoozePolicy.isSnoozed(until: row.snoozedUntil, since: row.snoozedAt, attention: row.attention,
                                   finishedAt: row.lastActivity, now: now) {
             return .keep(.snoozed)

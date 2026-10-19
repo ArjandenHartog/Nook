@@ -1,6 +1,6 @@
 import Foundation
 
-// The Agents list as sections (docs/AGENTS-PLAN.md §4.3, T3Code's sidebar): pure decisions about which row sits where,
+// The Agents list as sections: pure decisions about which row sits where,
 // what a drag does, and what the search matches. The view only draws what comes back. Foundation only.
 
 /// One session as the list needs to see it; the lead builds it from WorkspaceRun + attention.
@@ -70,7 +70,7 @@ struct InboxState: Codable, Equatable, Sendable {
         order.insert(id, at: min(max(index, 0), order.count))
     }
 
-    /// T3Code: settling a pinned thread unpins it.
+    /// Settling a pinned thread unpins it.
     mutating func settle(_ id: String) {
         settled.insert(id)
         pinned.removeAll { $0 == id }
@@ -102,7 +102,7 @@ struct InboxState: Codable, Equatable, Sendable {
 
 struct InboxEntry: Identifiable, Equatable, Sendable {
     var row: InboxRow
-    /// Drawn quieter: nothing here asks for you (T3Code `shouldRecedeSidebarThread`).
+    /// Drawn quieter: nothing here asks for you.
     var receded: Bool
     /// Came back from a snooze and the user has not looked yet.
     var woke: Bool
@@ -195,7 +195,7 @@ enum InboxLayout {
         a.row.lastActivity != b.row.lastActivity ? a.row.lastActivity > b.row.lastActivity : a.id < b.id
     }
 
-    /// T3Code `shouldRecedeSidebarThread`: the selected row and a question never recede; work in progress always does;
+    /// The selected row and a question never recede; work in progress always does;
     /// a finished or approval row only once it was read and did not just wake from a snooze.
     static func receded(_ row: InboxRow, woke: Bool, selected: Bool) -> Bool {
         if selected || row.attention == .input { return false }

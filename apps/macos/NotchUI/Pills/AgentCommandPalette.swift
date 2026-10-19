@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// ⌘K in the Agents tab (T3Code's command palette): one field to jump to a session or run an action. Typing filters;
+/// ⌘K in the Agents tab: one field to jump to a session or run an action. Typing filters;
 /// ↑/↓ move, Return runs, Esc closes. Sessions match on title, folder and branch.
 struct AgentCommandPalette: View {
     @EnvironmentObject private var app: AppModel
@@ -35,7 +35,7 @@ struct AgentCommandPalette: View {
                       .filter { !$0.isEmpty }.joined(separator: " · ")) { viewModel.selectedAgentID = "run:" + run.id.uuidString }
         }
         let all = actions + sessions
-        // `>` limits to actions, as in T3Code.
+        // `>` limits to actions.
         var text = query.trimmingCharacters(in: .whitespaces)
         if text.hasPrefix(">") {
             text.removeFirst()

@@ -58,7 +58,7 @@ enum GitHubPullRequestList {
     }
 }
 
-/// The pull request list kept between visits (T3Code keeps it the same way): the last list shows at once, also after a
+/// The pull request list kept between visits: the last list shows at once, also after a
 /// restart, and is refreshed in the background when it is older than half a minute. A failed refresh keeps the rows.
 @MainActor
 final class PullRequestStore: ObservableObject {

@@ -1,6 +1,6 @@
 import Foundation
 
-// Timeline scroll behaviour as a state machine without UI (T3Code timelineScrollAnchoring.ts). The view reports what
+// Timeline scroll behaviour as a state machine without UI. The view reports what
 // happened; it reads `shouldFollowEnd`, `anchorMessageID` and `cancelQueuedScrolls` back.
 
 struct ScrollModel: Equatable, Sendable {

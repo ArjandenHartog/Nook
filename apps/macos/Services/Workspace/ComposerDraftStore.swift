@@ -1,6 +1,6 @@
 import Foundation
 
-/// Keeps what you were typing per session, and the drafts you set aside (T3Code: drafts and the prompt stash), across
+/// Keeps what you were typing per session, and the drafts you set aside, across
 /// launches. The rules live in `ComposerDrafts` and `PromptStash`; this only reads and writes the file, a moment after
 /// the last keystroke.
 @MainActor

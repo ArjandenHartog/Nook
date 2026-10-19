@@ -1,6 +1,6 @@
 import Foundation
 
-// What needs you in the Agents list, derived in one place (T3Code's `resolveSidebarThreadStatus`): the list, the notch
+// What needs you in the Agents list, derived in one place: the list, the notch
 // and the notifications read the same answer. Foundation only, so tests can use it independently.
 
 /// How urgently a session asks for you. Lower raw value = more urgent; the list sorts on it.
@@ -36,7 +36,7 @@ enum AgentAttention: Int, Comparable, Sendable {
     }
 
     /// Approval beats question beats everything else. A pending request wins over `settled`: what waits for you is never
-    /// hidden, and a snoozed session wakes when something needs you (T3Code's `effectiveSnoozed`).
+    /// hidden, and a snoozed session wakes when something needs you.
     static func resolve(_ input: Input) -> AgentAttention {
         if input.pendingApprovals > 0 || input.status == .waitingApproval { return .approval }
         if input.pendingQuestions > 0 && input.status.isActive { return .input }
@@ -51,7 +51,7 @@ enum AgentAttention: Int, Comparable, Sendable {
     }
 }
 
-/// Fires a notification once per session and state, not once per event (T3Code keys it `runId:status`). A state that is
+/// Fires a notification once per session and state, not once per event. A state that is
 /// left and entered again fires again.
 struct AttentionLedger: Sendable {
     private var last: [String: String] = [:]
@@ -102,7 +102,7 @@ enum SnoozePolicy {
     }
 }
 
-/// Goes on with a session that a restart cut off (T3Code's `RestartContinuation`): one "Continue where you left off.",
+/// Goes on with a session that a restart cut off: one "Continue where you left off.",
 /// chained at most `limit` times so a session that keeps crashing does not loop.
 enum RestartContinuation {
     static let limit = 3

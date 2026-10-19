@@ -237,7 +237,7 @@ enum ToolTallyText {
 struct PlanCard: View {
     let text: String
     let canAct: Bool
-    /// "Implement in a new session" (T3Code's split button): the plan goes to a fork, this session stays as it is.
+    /// "Implement in a new session": the plan goes to a fork, this session stays as it is.
     var implementInNew: (() -> Void)? = nil
     let implement: () -> Void
     @State private var open = false
@@ -294,7 +294,7 @@ struct PlanCard: View {
         .accessibilityLabel(help)
     }
 
-    /// "Save as file" (T3Code downloads the plan as markdown); the name comes from the plan's title.
+    /// "Save as file"; the name comes from the plan's title.
     private func save() {
         let panel = NSSavePanel()
         panel.nameFieldStringValue = PlanPreview.fileName(forTitle: title)

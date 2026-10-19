@@ -1,6 +1,6 @@
 import Foundation
 
-// The logic of the one composer that Nook's chat and the agents share, after T3Code's: `/` commands, `@` mentions and
+// The logic of the one composer that Nook's chat and the agents share: `/` commands, `@` mentions and
 // `#` pull requests with a list under the text, typed context references that read well and cannot forge instructions,
 // queue / steer on the send button with a key to flip it, ArrowUp for earlier messages, and big pastes as attachments.
 // Foundation only, so tests can use it independently.
@@ -90,7 +90,7 @@ struct ComposerCommand: Equatable, Sendable, Identifiable {
 
 // MARK: Send, queue, steer
 
-/// What the send button does while the agent works (T3Code's `resolveComposerDispatchMode`).
+/// What the send button does while the agent works.
 enum ComposerDispatch {
     enum Intent: String, CaseIterable, Sendable { case steer, queue }
     enum Outcome: Equatable, Sendable { case send, steer, queue }
@@ -165,7 +165,7 @@ enum ComposerKeys {
 // MARK: Big pastes
 
 enum PasteRule {
-    /// A paste at least this big becomes a file the agent reads, not text in the box (T3Code: 32 KiB).
+    /// A paste at least this big becomes a file the agent reads, not text in the box.
     static let attachThreshold = 32 * 1024
 
     static func shouldAttach(_ text: String) -> Bool { text.utf8.count >= attachThreshold }
@@ -194,7 +194,7 @@ enum PasteRule {
 // MARK: Context references
 
 /// Something you point the agent at. It sits in the message as a link that reads well, and reaches the agent as a short
-/// marker plus a record (T3Code's `t3-context://` links).
+/// marker plus a record.
 struct ContextRef: Codable, Equatable, Hashable, Sendable {
     enum Kind: String, Codable, Sendable {
         case file, session, pullRequest, excerpt, source

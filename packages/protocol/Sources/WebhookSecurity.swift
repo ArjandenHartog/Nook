@@ -1,6 +1,6 @@
 import Foundation
 
-// Webhook verification (T3Code `webhookVerification.ts`) without CryptoKit, which does not exist on Linux where the core
+// Webhook verification without CryptoKit, which does not exist on Linux where the core
 // tests run. The types are called `PureSHA256` / `PureHMAC` because files that `import CryptoKit` use `SHA256` and
 // `HMAC<…>` from it: a module-level type with those names would shadow CryptoKit's inside the app target.
 
@@ -128,7 +128,7 @@ enum WebhookVerifier {
     }
 }
 
-/// Delivery ids seen recently, so a replayed request is refused (T3Code keeps the last 50 per task).
+/// Delivery ids seen recently, so a replayed request is refused.
 struct DeliveryLog: Codable, Equatable, Sendable {
     static let defaultRetention = 50
 
@@ -148,7 +148,7 @@ struct DeliveryLog: Codable, Equatable, Sendable {
     }
 }
 
-/// At most `limit` accepted deliveries per window (T3Code: 60 per minute per task, also behind the relay because the
+/// At most `limit` accepted deliveries per window (default: 60 per minute per task, also behind the relay because the
 /// tunnel hostname is public). The clock is passed in.
 struct RateWindow: Equatable, Sendable {
     static let defaultLimit = 60

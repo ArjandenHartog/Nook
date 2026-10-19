@@ -1,12 +1,12 @@
 import Foundation
 
-// Custom model prices (T3Code usage: "Set custom model prices", "Unpriced", "Mixed"). The agent's own reported cost is
+// Custom model prices. The agent's own reported cost is
 // used unless the user set a price for the model.
 
 struct ModelPrice: Codable, Equatable, Sendable {
     var inputPerMillion: Double?
     var outputPerMillion: Double?
-    /// Blank = use the input rate (T3Code).
+    /// Blank = use the input rate.
     var cacheReadPerMillion: Double?
     var cacheWritePerMillion: Double?
 
